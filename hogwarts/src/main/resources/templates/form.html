@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width"/>
-		<title>Home | Hogwarts</title>
+		<title>Form | Hogwarts</title>
 		<link rel="stylesheet" th:href="@{/css/styles.css}"/>
 	</head>
 	<body>
@@ -19,7 +19,26 @@
 		</header>		
 		<main>
 			<section>
-				<h1>Welcome Hogwarts</h1>
+				<h1>Register Wizards</h1>
+			</section>
+			<section>
+				<form th:action="@{}" th:object="${}" th:method="${}">
+					<div th:if="${}">
+						<label>Id: </label>
+						<input th:field="*{id}" readonly="readonly"/>
+					</div>
+					<div>
+						<label>Name: </label>
+						<input th:field="*{name}"/>
+					</div>
+					<div>
+						<label>Telephone: </label>
+						<input th:field="*{telephone}"/>
+					</div>
+					<div>
+						<label></label>
+					</div>
+				</form>
 			</section>
 		</main>
 	</body>

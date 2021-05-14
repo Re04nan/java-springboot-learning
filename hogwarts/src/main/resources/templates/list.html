@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width"/>
+		<title>List | Hogwarts</title>
+		<link rel="stylesheet" th:href="@{/css/styles.css}"/>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li><a th:href="@{/}">Hogwarts</a></li>
+					<li><a th:href="@{/list}">Wizards</a></li>
+					<li><a th:href="@{/list/new}">New Wizard</a></li>
+				</ul>
+			</nav>
+		</header>		
+		<main>
+			<section>
+				<h1>List Wizards</h1>
+			</section>
+			<section>
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Telephone</th>
+							<th>#</th>
+							<th>#</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="students: ${DataStudents}">
+							<td th:text="${students.name}"></td>
+							<td th:text="${students.telephone}"></td>
+							<td>
+								<a th:href="@{/DataStudents/{students}/edit(students=${students.id})}">Edit</a>
+							</td>
+							<td>
+								<form th:action="@{/DataStudents/{students}(students=${students.id})}"
+								 	th:method="delete">
+									<button>Remove</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+		</main>
+	</body>
+</html>
