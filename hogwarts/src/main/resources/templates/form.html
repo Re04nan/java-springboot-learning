@@ -22,21 +22,22 @@
 				<h1>Register Wizards</h1>
 			</section>
 			<section>
-				<form th:action="@{}" th:object="${}" th:method="${}">
-					<div th:if="${}">
+				<form th:action="${students.new} ? @{/list} : @{/list/{students}(students=${students.id})}"
+					th:object="${students}" th:method="${students.new} ? post : put">
+					<div th:if="${!students.new}">
 						<label>Id: </label>
-						<input th:field="*{id}" readonly="readonly"/>
+						<input th:field="*{id}" readonly/>
 					</div>
 					<div>
 						<label>Name: </label>
-						<input th:field="*{name}"/>
+						<input th:field="*{name}" required/>
 					</div>
 					<div>
 						<label>Telephone: </label>
-						<input th:field="*{telephone}"/>
+						<input th:field="*{telephone}" required/>
 					</div>
 					<div>
-						<label></label>
+						<button>Save</button>
 					</div>
 				</form>
 			</section>

@@ -15,6 +15,10 @@ public class DataStudents {
 		this.telephone = telephone;
 	}
 	
+	public boolean isNew() {
+		return id == null;
+	}
+	
 	public String getId() {
 		return id;
 	}

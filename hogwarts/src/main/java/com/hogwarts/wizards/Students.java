@@ -1,9 +1,12 @@
 package com.hogwarts.wizards;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -31,5 +34,47 @@ public class Students {
 		
 		return modelAndView;
 	}
+	
+	@GetMapping("/list/new")
+	public ModelAndView newStudent() {
+		ModelAndView modelAndView = new ModelAndView("form");
+		
+		modelAndView.addObject("students", new DataStudents());
+		
+		return modelAndView;
+	}
+	
+	@PostMapping("/list")
+	public String register(DataStudents student) {
+		String id = UUID.randomUUID().toString();
+		
+		student.setId(id);
+		LIST_DATA_STUDENTS.add(student);
+		
+		return "redirect:/list";
+	}
+	
+	@GetMapping("/list/{id}/edit")
+	public ModelAndView update(@PathVariable String id) {
+		ModelAndView modelAndView = new ModelAndView("form");
+		
+		DataStudents student = searchStudent(id);
+		
+		modelAndView.addObject("students", student);
+		
+		return modelAndView;
+	}
+	
+	public DataStudents searchStudent(String id) {
+		for (int i = 0; i < LIST_DATA_STUDENTS.size(); i++) {
+			DataStudents student = LIST_DATA_STUDENTS.get(i);
+			
+			if(student.getId().equals(id)) {
+				return student;
+			}
+		}
+		return null;
+	}
+	
 
 }
