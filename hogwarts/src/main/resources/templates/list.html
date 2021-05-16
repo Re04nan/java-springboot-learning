@@ -39,7 +39,7 @@
 								<a th:href="@{/list/{students}/edit(students=${students.id})}">Edit</a>
 							</td>
 							<td>
-								<form th:action="@{/DataStudents/{students}(students=${students.id})}"
+								<form th:action="@{/list/{students}(students=${students.id})}"
 								 	th:method="delete">
 									<button>Remove</button>
 								</form>

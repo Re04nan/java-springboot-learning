@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -54,8 +56,30 @@ public class Students {
 		return "redirect:/list";
 	}
 	
+	@DeleteMapping("/list/{id}")
+	public String removeStudent(@PathVariable String id) {
+		DataStudents deleteStudent = searchStudent(id);
+		
+		LIST_DATA_STUDENTS.remove(deleteStudent);
+		
+		return "redirect:/list";
+	}
+	
+	@PutMapping("/list/{id}")
+	public String update(DataStudents student) {
+		Integer indice = searchStudentIndice(student.getId());
+		
+		DataStudents studentOld = LIST_DATA_STUDENTS.get(indice);
+				
+		LIST_DATA_STUDENTS.remove(studentOld);
+		
+		LIST_DATA_STUDENTS.add(indice, student);
+		
+		return "redirect:/list";
+	}
+	
 	@GetMapping("/list/{id}/edit")
-	public ModelAndView update(@PathVariable String id) {
+	public ModelAndView edit(@PathVariable String id) {
 		ModelAndView modelAndView = new ModelAndView("form");
 		
 		DataStudents student = searchStudent(id);
@@ -65,12 +89,22 @@ public class Students {
 		return modelAndView;
 	}
 	
-	public DataStudents searchStudent(String id) {
+	private DataStudents searchStudent(String id) {
+		Integer indice = searchStudentIndice(id);
+		
+		if(indice != null) {
+			DataStudents student = LIST_DATA_STUDENTS.get(indice);
+			return student;
+		}
+		return null;
+	}
+	
+	private Integer searchStudentIndice(String id) {
 		for (int i = 0; i < LIST_DATA_STUDENTS.size(); i++) {
 			DataStudents student = LIST_DATA_STUDENTS.get(i);
 			
 			if(student.getId().equals(id)) {
-				return student;
+				return i;
 			}
 		}
 		return null;
